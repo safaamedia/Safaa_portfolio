@@ -103,51 +103,52 @@ export default function Navbar({ darkMode }: NavbarProps) {
   return (
     <>
       <style jsx>{`
-        .nav {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  width: fit-content;
-  padding: 6px;
-  border-radius: 999px;
-  backdrop-filter: blur(16px);
-  overflow-x: auto;
-  scrollbar-width: none;
-  max-width: 100%;
-}
+  .nav {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    max-width: 100%;
+    padding: 8px;
+    border-radius: 999px;
+    backdrop-filter: blur(16px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
 
-        .nav::-webkit-scrollbar {
-          display: none;
-        }
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
 
-        .nav-link {
-          position: relative;
-          z-index: 2;
-          padding: 10px 14px;
-          border-radius: 999px;
-          text-decoration: none;
-          font-size: 14px;
-          font-weight: 600;
-          transition: color 0.2s ease;
-          white-space: nowrap;
-          cursor: pointer;
-          flex: 0 0 auto;
-        }
+  .nav-link {
+    position: relative;
+    z-index: 2;
+    padding: 10px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
 
-        .active-element {
-          --active-element-show: 0;
-          position: absolute;
-          z-index: 1;
-          top: 6px;
-          left: 0;
-          width: 88px;
-          height: calc(100% - 12px);
-          border-radius: 999px;
-          opacity: var(--active-element-show);
-          pointer-events: none;
-        }
-      `}</style>
+  .active-element {
+    --active-element-show: 0;
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    left: 0;
+    width: 88px;
+    height: calc(100% - 16px);
+    border-radius: 999px;
+    opacity: var(--active-element-show);
+    pointer-events: none;
+  }
+`}</style>
 
       <nav
         ref={navRef}

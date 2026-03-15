@@ -158,33 +158,33 @@ export default function SafaaPortfolio() {
         <div className="absolute inset-0 opacity-[0.06] [background-image:radial-gradient(#8b5cf6_1px,transparent_1px)] [background-size:28px_28px]" />
       </div>
 
-      <div className="fixed left-1/2 top-3 z-50 -translate-x-1/2 px-2">
-        <div className="flex items-center gap-3 sm:gap-4">
-          
-            <Navbar darkMode={darkMode} />
-          
+      <div className="fixed left-1/2 top-3 z-50 w-[96%] max-w-6xl -translate-x-1/2 px-2">
+  <div className="flex items-center justify-center gap-3 sm:gap-4">
+    <div className="min-w-0">
+      <Navbar darkMode={darkMode} />
+    </div>
 
-          <Image
-            src="/MyLOGO.png"
-            alt="My Logo"
-            width={72}
-            height={72}
-            className="h-[72px] w-[72px] shrink-0 rounded-full border-2 border-violet-400 shadow-lg shadow-violet-500/20 backdrop-blur-2xl transition hover:scale-105 sm:h-[90px] sm:w-[90px]"
-            priority
-          />
+    <Image
+      src="/MyLOGO.png"
+      alt="My Logo"
+      width={72}
+      height={72}
+      className="h-[56px] w-[56px] shrink-0 rounded-full border-2 border-violet-400 shadow-lg shadow-violet-500/20 backdrop-blur-2xl transition hover:scale-105 sm:h-[90px] sm:w-[90px]"
+      priority
+    />
 
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className={`shrink-0 rounded-full px-3 py-2 text-sm font-semibold shadow transition hover:scale-105 sm:px-4 ${
-              darkMode
-                ? "border border-violet-700/50 bg-[#181127] text-violet-100"
-                : "border border-violet-300 bg-white/70 text-violet-700"
-            }`}
-          >
-            {darkMode ? "☀️ Light" : "🌙 Dark"}
-          </button>
-        </div>
-      </div>
+    <button
+      onClick={() => setDarkMode(!darkMode)}
+      className={`shrink-0 rounded-full px-2.5 py-2 text-xs font-semibold shadow transition hover:scale-105 sm:px-4 sm:text-sm ${
+        darkMode
+          ? "border border-violet-700/50 bg-[#181127] text-violet-100"
+          : "border border-violet-300 bg-white/70 text-violet-700"
+      }`}
+    >
+      {darkMode ? "☀️ Light" : "🌙 Dark"}
+    </button>
+  </div>
+</div>
 
       <section
         className={`relative pt-28 ${
