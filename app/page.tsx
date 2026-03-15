@@ -7,20 +7,21 @@ import { motion, type Variants } from "framer-motion";
 
 export default function SafaaPortfolio() {
   const [darkMode, setDarkMode] = useState(false);
-  
-  useEffect(() => {
-  if ("scrollRestoration" in window.history) {
-    window.history.scrollRestoration = "manual";
-  }
 
-  window.scrollTo(0, 0);
-}, []);
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleEmailClick = () => {
-  const email = "ayezsafaa@gmail.com";
-  const subject = "Portfolio Inquiry";
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
-  window.open(gmailUrl, "_blank");
-};
+    const email = "ayezsafaa@gmail.com";
+    const subject = "Portfolio Inquiry";
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+    window.open(gmailUrl, "_blank");
+  };
 
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 40 },
@@ -157,40 +158,41 @@ export default function SafaaPortfolio() {
         <div className="absolute inset-0 opacity-[0.06] [background-image:radial-gradient(#8b5cf6_1px,transparent_1px)] [background-size:28px_28px]" />
       </div>
 
-      {/* Fixed navbar */}
-      <div className="fixed left-1/2 top-4 z-50 -translate-x-1/2">
-        <div className="flex items-center gap-4">
-          <Navbar darkMode={darkMode} />
+      <div className="fixed left-1/2 top-3 z-50 -translate-x-1/2 px-2">
+  <div className="flex items-center gap-2 sm:gap-4">
+    <Navbar darkMode={darkMode} />
 
-          <Image
-            src="/MyLOGO.png"
-            alt="My Logo"
-            width={90}
-            height={90}
-            className="rounded-full border-2 border-violet-400 shadow-lg shadow-violet-500/20 backdrop-blur-2xl hover:scale-105 transition"
-            priority
-          />
+    <Image
+      src="/MyLOGO.png"
+      alt="My Logo"
+      width={72}
+      height={72}
+      className="h-[56px] w-[56px] shrink-0 rounded-full border-2 border-violet-400 shadow-lg shadow-violet-500/20 backdrop-blur-2xl transition hover:scale-105 sm:h-[90px] sm:w-[90px]"
+      priority
+    />
 
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className={`rounded-full px-4 py-2 text-sm font-semibold shadow transition hover:scale-105 ${
-              darkMode
-                ? "border border-violet-700/50 bg-[#181127] text-violet-100"
-                : "border border-violet-300 bg-white/70 text-violet-700"
-            }`}
-          >
-            {darkMode ? "☀️ Light" : "🌙 Dark"}
-          </button>
-        </div>
-      </div>
+    <button
+      onClick={() => setDarkMode(!darkMode)}
+      className={`shrink-0 rounded-full px-2.5 py-2 text-xs font-semibold shadow transition hover:scale-105 sm:px-4 sm:text-sm ${
+        darkMode
+          ? "border border-violet-700/50 bg-[#181127] text-violet-100"
+          : "border border-violet-300 bg-white/70 text-violet-700"
+      }`}
+    >
+      {darkMode ? "☀️ Light" : "🌙 Dark"}
+    </button>
+  </div>
+</div>
 
       <section
         className={`relative pt-28 ${
-          darkMode ? "border-b border-violet-900/40" : "border-b border-violet-100/80"
+          darkMode
+            ? "border-b border-violet-900/40"
+            : "border-b border-violet-100/80"
         }`}
       >
         <div className="mx-auto max-w-6xl px-6 pb-20 pt-16 md:pb-28 md:pt-24">
-          <div className="grid items-center gap-12 md:grid-cols-[1.1fr_0.9fr]">
+          <div className="grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             <motion.div
               variants={staggerContainer}
               initial="hidden"
@@ -234,10 +236,31 @@ export default function SafaaPortfolio() {
                 .
               </motion.p>
 
-              <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-4">
+              <motion.div
+                variants={fadeUp}
+                className={`mt-8 lg:hidden mx-auto w-fit overflow-hidden rounded-[2rem] p-3 shadow-xl backdrop-blur-2xl ${
+                  darkMode
+                    ? "border border-violet-800/40 bg-[#181127]"
+                    : "border border-violet-100 bg-white/70"
+                }`}
+              >
+                <Image
+                  src="/MyPhoto.png"
+                  alt="Safaa Ayez"
+                  width={300}
+                  height={380}
+                  className="mx-auto h-auto w-[260px] rounded-[1.5rem] object-cover sm:w-[300px]"
+                  priority
+                />
+              </motion.div>
+
+              <motion.div
+                variants={fadeUp}
+                className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:flex lg:flex-wrap"
+              >
                 <a
                   href="#projects"
-                  className="rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-400 px-6 py-3 font-semibold text-white shadow-[0_10px_30px_rgba(139,92,246,0.28)] transition hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(139,92,246,0.35)]"
+                  className="rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-400 px-6 py-3 text-center font-semibold text-white shadow-[0_10px_30px_rgba(139,92,246,0.28)] transition hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(139,92,246,0.35)]"
                 >
                   Explore My Work
                 </a>
@@ -245,7 +268,7 @@ export default function SafaaPortfolio() {
                 <a
                   href="/MyCV.pdf"
                   download
-                  className={`rounded-2xl px-6 py-3 font-semibold shadow-sm backdrop-blur transition hover:-translate-y-1 ${
+                  className={`rounded-2xl px-6 py-3 text-center font-semibold shadow-sm backdrop-blur transition hover:-translate-y-1 ${
                     darkMode
                       ? "border border-violet-700/40 bg-[#181127] text-violet-100 hover:bg-[#221735]"
                       : "border border-violet-200 bg-white/70 text-violet-700 hover:bg-white"
@@ -256,7 +279,7 @@ export default function SafaaPortfolio() {
 
                 <a
                   href="#contact"
-                  className={`rounded-2xl px-6 py-3 font-semibold shadow-sm backdrop-blur transition hover:-translate-y-1 ${
+                  className={`rounded-2xl px-6 py-3 text-center font-semibold shadow-sm backdrop-blur transition hover:-translate-y-1 sm:col-span-2 lg:col-span-1 ${
                     darkMode
                       ? "border border-violet-700/40 bg-[#181127] text-violet-100 hover:bg-[#221735]"
                       : "border border-violet-200 bg-white/70 text-violet-700 hover:bg-white"
@@ -265,185 +288,183 @@ export default function SafaaPortfolio() {
                   Let’s Connect
                 </a>
               </motion.div>
-              {/* Dreamy info box under buttons */}
-<motion.div
-  variants={fadeUp}
-  className={`mt-10 max-w-xl rounded-[2rem] p-6 shadow-xl backdrop-blur-2xl ${
-    darkMode
-      ? "border border-violet-800/40 bg-[#181127]"
-      : "border border-violet-100 bg-white/70"
-  }`}
->
-  <div
-    className={`mb-4 flex items-center gap-2 text-sm ${
-      darkMode ? "text-violet-300" : "text-violet-500"
-    }`}
-  >
-    <span className="h-2 w-2 rounded-full bg-violet-500" />
-    dreamy lavender theme
-  </div>
 
-  <div className="grid gap-4 sm:grid-cols-2">
-    <div
-      className={`rounded-[1.5rem] p-5 transition hover:scale-[1.02] ${
-        darkMode
-          ? "bg-[#221735]"
-          : "bg-gradient-to-br from-violet-50 to-fuchsia-50"
-      }`}
-    >
-      <p
-        className={`text-sm ${
-          darkMode ? "text-violet-300/80" : "text-violet-400"
-        }`}
-      >
-        Primary Focus
-      </p>
-      <p
-        className={`mt-2 text-xl font-bold ${
-          darkMode ? "text-violet-100" : "text-[#4c2f7a]"
-        }`}
-      >
-        Frontend Development
-      </p>
-    </div>
+              <motion.div
+                variants={fadeUp}
+                className={`mt-10 w-full max-w-xl rounded-[2rem] p-5 sm:p-6 shadow-xl backdrop-blur-2xl ${
+                  darkMode
+                    ? "border border-violet-800/40 bg-[#181127]"
+                    : "border border-violet-100 bg-white/70"
+                }`}
+              >
+                <div
+                  className={`mb-4 flex items-center gap-2 text-sm ${
+                    darkMode ? "text-violet-300" : "text-violet-500"
+                  }`}
+                >
+                  <span className="h-2 w-2 rounded-full bg-violet-500" />
+                  dreamy lavender theme
+                </div>
 
-    <div
-      className={`rounded-[1.5rem] p-5 transition hover:scale-[1.02] ${
-        darkMode
-          ? "bg-[#221735]"
-          : "bg-gradient-to-br from-fuchsia-50 to-purple-50"
-      }`}
-    >
-      <p
-        className={`text-sm ${
-          darkMode ? "text-violet-300/80" : "text-violet-400"
-        }`}
-      >
-        Secondary Focus
-      </p>
-      <p
-        className={`mt-2 text-xl font-bold ${
-          darkMode ? "text-violet-100" : "text-[#4c2f7a]"
-        }`}
-      >
-        Digital Marketing
-      </p>
-    </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div
+                    className={`rounded-[1.5rem] p-5 transition hover:scale-[1.02] ${
+                      darkMode
+                        ? "bg-[#221735]"
+                        : "bg-gradient-to-br from-violet-50 to-fuchsia-50"
+                    }`}
+                  >
+                    <p
+                      className={`text-sm ${
+                        darkMode ? "text-violet-300/80" : "text-violet-400"
+                      }`}
+                    >
+                      Primary Focus
+                    </p>
+                    <p
+                      className={`mt-2 text-lg font-bold sm:text-xl ${
+                        darkMode ? "text-violet-100" : "text-[#4c2f7a]"
+                      }`}
+                    >
+                      Frontend Development
+                    </p>
+                  </div>
 
-    <div
-      className={`rounded-[1.5rem] p-5 sm:col-span-2 transition hover:scale-[1.01] ${
-        darkMode
-          ? "bg-[#221735]"
-          : "bg-gradient-to-br from-white to-violet-50"
-      }`}
-    >
-      <p
-        className={`text-sm ${
-          darkMode ? "text-violet-300/80" : "text-violet-400"
-        }`}
-      >
-        Education
-      </p>
-      <p
-        className={`mt-2 text-xl font-bold ${
-          darkMode ? "text-violet-100" : "text-[#4c2f7a]"
-        }`}
-      >
-        Computer Engineering, Cybersecurity
-      </p>
-      <p
-        className={`mt-1 text-sm ${
-          darkMode ? "text-violet-300/75" : "text-[#7a6a98]"
-        }`}
-      >
-        Universiapolis – International University of Agadir
-      </p>
-    </div>
-  </div>
-</motion.div>
+                  <div
+                    className={`rounded-[1.5rem] p-5 transition hover:scale-[1.02] ${
+                      darkMode
+                        ? "bg-[#221735]"
+                        : "bg-gradient-to-br from-fuchsia-50 to-purple-50"
+                    }`}
+                  >
+                    <p
+                      className={`text-sm ${
+                        darkMode ? "text-violet-300/80" : "text-violet-400"
+                      }`}
+                    >
+                      Secondary Focus
+                    </p>
+                    <p
+                      className={`mt-2 text-lg font-bold sm:text-xl ${
+                        darkMode ? "text-violet-100" : "text-[#4c2f7a]"
+                      }`}
+                    >
+                      Digital Marketing
+                    </p>
+                  </div>
+
+                  <div
+                    className={`rounded-[1.5rem] p-5 sm:col-span-2 transition hover:scale-[1.01] ${
+                      darkMode
+                        ? "bg-[#221735]"
+                        : "bg-gradient-to-br from-white to-violet-50"
+                    }`}
+                  >
+                    <p
+                      className={`text-sm ${
+                        darkMode ? "text-violet-300/80" : "text-violet-400"
+                      }`}
+                    >
+                      Education
+                    </p>
+                    <p
+                      className={`mt-2 text-lg font-bold sm:text-xl ${
+                        darkMode ? "text-violet-100" : "text-[#4c2f7a]"
+                      }`}
+                    >
+                      Computer Engineering, Cybersecurity
+                    </p>
+                    <p
+                      className={`mt-1 text-sm ${
+                        darkMode ? "text-violet-300/75" : "text-[#7a6a98]"
+                      }`}
+                    >
+                      Universiapolis – International University of Agadir
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
 
             <motion.div
-  variants={fadeUp}
-  initial="hidden"
-  animate="show"
-  className="relative space-y-5"
->
-  <div
-    className={`absolute -left-6 -top-6 h-24 w-24 rounded-3xl blur-2xl ${
-      darkMode ? "bg-violet-500/20" : "bg-violet-300/50"
-    }`}
-  />
-  <div
-    className={`absolute -bottom-8 -right-8 h-28 w-28 rounded-full blur-2xl ${
-      darkMode ? "bg-fuchsia-500/15" : "bg-fuchsia-300/40"
-    }`}
-  />
+              variants={fadeUp}
+              initial="hidden"
+              animate="show"
+              className="relative space-y-5"
+            >
+              <div
+                className={`absolute -left-6 -top-6 h-24 w-24 rounded-3xl blur-2xl ${
+                  darkMode ? "bg-violet-500/20" : "bg-violet-300/50"
+                }`}
+              />
+              <div
+                className={`absolute -bottom-8 -right-8 h-28 w-28 rounded-full blur-2xl ${
+                  darkMode ? "bg-fuchsia-500/15" : "bg-fuchsia-300/40"
+                }`}
+              />
 
-  {/* My picture */}
-  <div
-    className={`relative mx-auto w-fit overflow-hidden rounded-[2rem] p-3 shadow-xl backdrop-blur-2xl ${
-      darkMode
-        ? "border border-violet-800/40 bg-[#181127]"
-        : "border border-violet-100 bg-white/70"
-    }`}
-  >
-    <Image
-      src="/MyPhoto.png"
-      alt="Safaa Ayez"
-      width={420}
-      height={500}
-      className="h-auto w-full rounded-[1.5rem] object-cover"
-      priority
-    />
-  </div>
+              <div
+                className={`relative mx-auto hidden w-fit overflow-hidden rounded-[2rem] p-3 shadow-xl backdrop-blur-2xl lg:block ${
+                  darkMode
+                    ? "border border-violet-800/40 bg-[#181127]"
+                    : "border border-violet-100 bg-white/70"
+                }`}
+              >
+                <Image
+                  src="/MyPhoto.png"
+                  alt="Safaa Ayez"
+                  width={420}
+                  height={500}
+                  className="h-auto w-full rounded-[1.5rem] object-cover"
+                  priority
+                />
+              </div>
 
-  {/* Small boxes under photo */}
-  <motion.div
-    variants={staggerContainer}
-    initial="hidden"
-    animate="show"
-    className="grid gap-4 sm:grid-cols-3"
-  >
-    {[
-      { label: "Focus", value: "Frontend" },
-      { label: "Creative Side", value: "Marketing" },
-      { label: "Open To", value: "Freelance" },
-    ].map((item) => (
-      <motion.div
-        key={item.label}
-        variants={fadeUp}
-        className={`rounded-[1.5rem] p-9 min-h-[150px] flex flex-col justify-center items-center text-centerg shadow-sm backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-md ${
-          darkMode
-            ? "border border-violet-800/40 bg-[#181127]"
-            : "border border-violet-100 bg-white/80"
-        }`}
-      >
-        <p
-          className={`text-[11px] uppercase tracking-[0.2em] ${
-            darkMode ? "text-violet-300/80" : "text-violet-400"
-          }`}
-        >
-          {item.label}
-        </p>
-        <p
-          className={`mt-2 text-base font-bold ${
-            darkMode ? "text-violet-100" : "text-[#4c2f7a]"
-          }`}
-        >
-          {item.value}
-        </p>
-      </motion.div>
-    ))}
-  </motion.div>
-</motion.div>
+              <motion.div
+                variants={staggerContainer}
+                initial="hidden"
+                animate="show"
+                className="hidden gap-4 sm:grid-cols-3 lg:grid"
+              >
+                {[
+                  { label: "Focus", value: "Frontend" },
+                  { label: "Creative Side", value: "Marketing" },
+                  { label: "Open To", value: "Freelance" },
+                ].map((item) => (
+                  <motion.div
+                    key={item.label}
+                    variants={fadeUp}
+                    className={`rounded-[1.5rem] p-9 min-h-[150px] flex flex-col justify-center items-center text-center shadow-sm backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-md ${
+                      darkMode
+                        ? "border border-violet-800/40 bg-[#181127]"
+                        : "border border-violet-100 bg-white/80"
+                    }`}
+                  >
+                    <p
+                      className={`text-[11px] uppercase tracking-[0.2em] ${
+                        darkMode ? "text-violet-300/80" : "text-violet-400"
+                      }`}
+                    >
+                      {item.label}
+                    </p>
+                    <p
+                      className={`mt-2 text-base font-bold ${
+                        darkMode ? "text-violet-100" : "text-[#4c2f7a]"
+                      }`}
+                    >
+                      {item.value}
+                    </p>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       <motion.section
         id="about"
-        className="mx-auto max-w-6xl px-6 py-16"
+        className="scroll-mt-32 mx-auto max-w-6xl px-6 py-16"
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
@@ -541,7 +562,7 @@ export default function SafaaPortfolio() {
 
       <motion.section
         id="skills"
-        className="mx-auto max-w-6xl px-6 py-4"
+        className="scroll-mt-32 mx-auto max-w-6xl px-6 py-4"
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
@@ -618,7 +639,7 @@ export default function SafaaPortfolio() {
 
       <motion.section
         id="projects"
-        className="mx-auto max-w-6xl px-6 py-16"
+        className="scroll-mt-32 mx-auto max-w-6xl px-6 py-16"
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
@@ -783,7 +804,7 @@ export default function SafaaPortfolio() {
 
       <motion.section
         id="experience"
-        className="mx-auto max-w-6xl px-6 py-4"
+        className="scroll-mt-32 mx-auto max-w-6xl px-6 py-4"
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
@@ -857,7 +878,7 @@ export default function SafaaPortfolio() {
 
       <motion.section
         id="contact"
-        className="mx-auto max-w-6xl px-6 py-16"
+        className="scroll-mt-32 mx-auto max-w-6xl px-6 py-16"
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
