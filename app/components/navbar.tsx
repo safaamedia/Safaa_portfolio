@@ -59,29 +59,32 @@ export default function Navbar({ darkMode }: NavbarProps) {
     }
   };
 
+  const scrollToSection = (id: string, index: number) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    setActiveIndex(index);
+    moveIndicator(index, true);
+
+    if (id === "contact") {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+      return;
+    }
+
+    const navbarOffset = 120;
+    const top =
+      element.getBoundingClientRect().top + window.scrollY - navbarOffset;
+
+    window.scrollTo({
+      top,
+      behavior: "smooth",
+    });
+  };
+
   useEffect(() => {
-    const sections = navItems.map((item) => item.id);
-
-    const updateActiveFromScroll = () => {
-      const scrollPosition = window.scrollY + 160;
-
-      for (let i = 0; i < sections.length; i++) {
-        const element = document.getElementById(sections[i]);
-        if (!element) continue;
-
-        const { offsetTop, offsetHeight } = element;
-
-        if (
-          scrollPosition >= offsetTop &&
-          scrollPosition < offsetTop + offsetHeight
-        ) {
-          setActiveIndex(i);
-          moveIndicator(i, true);
-          break;
-        }
-      }
-    };
-
     const handleResize = () => {
       moveIndicator(activeIndex, false);
     };
@@ -90,13 +93,9 @@ export default function Navbar({ darkMode }: NavbarProps) {
       moveIndicator(activeIndex, false);
     });
 
-    window.addEventListener("scroll", updateActiveFromScroll);
     window.addEventListener("resize", handleResize);
 
-    updateActiveFromScroll();
-
     return () => {
-      window.removeEventListener("scroll", updateActiveFromScroll);
       window.removeEventListener("resize", handleResize);
     };
   }, [activeIndex]);
@@ -125,6 +124,7 @@ export default function Navbar({ darkMode }: NavbarProps) {
           font-weight: 600;
           transition: color 0.2s ease;
           white-space: nowrap;
+          cursor: pointer;
         }
 
         .active-element {
@@ -175,9 +175,9 @@ export default function Navbar({ darkMode }: NavbarProps) {
                   ? "text-violet-200/80 hover:text-white"
                   : "text-[#5f4b80] hover:text-violet-700"
               }`}
-              onClick={() => {
-                setActiveIndex(index);
-                moveIndicator(index, true);
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(item.id, index);
               }}
             >
               {item.label}
