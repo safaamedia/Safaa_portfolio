@@ -375,7 +375,7 @@ export default function SafaaPortfolio() {
     }`}
   >
     <Image
-      src="/MyPhoto.jpg"
+      src="/MyPhoto.png"
       alt="Safaa Ayez"
       width={420}
       height={500}
