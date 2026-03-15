@@ -1,23 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 export default function SafaaPortfolio() {
   const [darkMode, setDarkMode] = useState(false);
 
-  const fadeUp = {
+  const fadeUp: Variants = {
     hidden: { opacity: 0, y: 40 },
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.6 },
     },
   };
 
-  const staggerContainer = {
+  const staggerContainer: Variants = {
     hidden: {},
     show: {
       transition: {
@@ -310,7 +310,7 @@ export default function SafaaPortfolio() {
 
   {/* My picture */}
   <div
-    className={`relative overflow-hidden rounded-[2rem] p-3 shadow-xl backdrop-blur-2xl ${
+    className={`relative mx-auto w-fit overflow-hidden rounded-[2rem] p-3 shadow-xl backdrop-blur-2xl ${
       darkMode
         ? "border border-violet-800/40 bg-[#181127]"
         : "border border-violet-100 bg-white/70"
@@ -319,9 +319,9 @@ export default function SafaaPortfolio() {
     <Image
       src="/MyPhoto.jpg"
       alt="Safaa Ayez"
-      width={420}
-      height={500}
-      className="h-auto w-full rounded-[1.5rem] object-cover"
+      width={340}
+      height={420}
+      className="mx-auto h-auto w-[320px] rounded-[1.5rem] object-cover md:w-[340px]"
       priority
     />
   </div>
