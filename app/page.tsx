@@ -1,12 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/navbar";
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 
 export default function SafaaPortfolio() {
   const [darkMode, setDarkMode] = useState(false);
+  
+  useEffect(() => {
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
+
+  window.scrollTo(0, 0);
+}, []);
   const handleEmailClick = () => {
   const email = "ayezsafaa@gmail.com";
   const subject = "Portfolio Inquiry";
