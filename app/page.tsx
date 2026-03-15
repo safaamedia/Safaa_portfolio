@@ -7,6 +7,12 @@ import { motion, type Variants } from "framer-motion";
 
 export default function SafaaPortfolio() {
   const [darkMode, setDarkMode] = useState(false);
+  const handleEmailClick = () => {
+  const email = "ayezsafaa@gmail.com";
+  const subject = "Portfolio Inquiry";
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+  window.open(gmailUrl, "_blank");
+};
 
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 40 },
@@ -894,12 +900,12 @@ export default function SafaaPortfolio() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="mailto:ayezsafaa@gmail.com?subject=Portfolio%20Inquiry"
+              <button
+                onClick={handleEmailClick}
                 className="rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-400 px-6 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-1"
               >
                 Email Me
-              </a>
+              </button>
               <a
                 href="https://github.com/safaamedia"
                 target="_blank"
