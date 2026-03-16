@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import Navbar from "./components/navbar";
 import Image from "next/image";
-import { motion, type Variants } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 
 export default function SafaaPortfolio() {
   const [darkMode, setDarkMode] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -19,8 +20,17 @@ export default function SafaaPortfolio() {
   const handleEmailClick = () => {
     const email = "ayezsafaa@gmail.com";
     const subject = "Portfolio Inquiry";
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(
+      subject
+    )}`;
     window.open(gmailUrl, "_blank");
+  };
+
+  const getYoutubeEmbedUrl = (url: string) => {
+    const match = url.match(
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    );
+    return match ? `https://www.youtube.com/embed/${match[1]}` : url;
   };
 
   const fadeUp: Variants = {
@@ -113,6 +123,42 @@ export default function SafaaPortfolio() {
     { title: "Brand Visuals", icon: "✨" },
   ];
 
+  const leadershipGallery = [
+    {
+      title: "UFO Club Universiapolis",
+      image: "/ufo.jpeg",
+      description:
+        "Student leadership, teamwork, and event coordination through club activities and initiatives.",
+      quote: "",
+      link: "",
+    },
+    {
+      title: "GDG On Campus Universiapolis",
+      image: "/gdg.jpeg",
+      description:
+        "Participation in tech events, workshops, and community-building activities for students.",
+      quote: "",
+      link: "",
+    },
+    {
+      title: "Lions Club Universiapolis",
+      image: "/lions.jpeg",
+      description:
+        "Community engagement, communication, volunteering, and social impact initiatives.",
+      quote: "",
+      link: "",
+    },
+    {
+      title: "Cœurs en Cadeau",
+      image: "/coeurs-en-cadeau.jpg",
+      description:
+        "Cœurs en Cadeau is a social initiative organized by our team to create a joyful and memorable day for orphaned children through games, sharing, and kindness.",
+      quote:
+        "Offrir un sourire à un enfant, c'est semer de la joie et de l'espoir pour construire un avenir plus humain.",
+      link: "https://www.youtube.com/watch?v=hDDTdeVf8Rw",
+    },
+  ];
+
   return (
     <div
       className={`min-h-screen overflow-x-hidden transition-colors duration-500 ${
@@ -159,32 +205,32 @@ export default function SafaaPortfolio() {
       </div>
 
       <div className="fixed left-1/2 top-3 z-50 w-[96%] max-w-6xl -translate-x-1/2 px-2">
-  <div className="flex items-center justify-center gap-3 sm:gap-4">
-    <div className="min-w-0">
-      <Navbar darkMode={darkMode} />
-    </div>
+        <div className="flex items-center justify-center gap-3 sm:gap-4">
+          <div className="min-w-0">
+            <Navbar darkMode={darkMode} />
+          </div>
 
-    <Image
-      src="/MyLOGO.png"
-      alt="My Logo"
-      width={72}
-      height={72}
-      className="h-[56px] w-[56px] shrink-0 rounded-full border-2 border-violet-400 shadow-lg shadow-violet-500/20 backdrop-blur-2xl transition hover:scale-105 sm:h-[90px] sm:w-[90px]"
-      priority
-    />
+          <Image
+            src="/MyLOGO.png"
+            alt="My Logo"
+            width={72}
+            height={72}
+            className="h-[56px] w-[56px] shrink-0 rounded-full border-2 border-violet-400 shadow-lg shadow-violet-500/20 backdrop-blur-2xl transition hover:scale-105 sm:h-[90px] sm:w-[90px]"
+            priority
+          />
 
-    <button
-      onClick={() => setDarkMode(!darkMode)}
-      className={`shrink-0 rounded-full px-2.5 py-2 text-xs font-semibold shadow transition hover:scale-105 sm:px-4 sm:text-sm ${
-        darkMode
-          ? "border border-violet-700/50 bg-[#181127] text-violet-100"
-          : "border border-violet-300 bg-white/70 text-violet-700"
-      }`}
-    >
-      {darkMode ? "☀️ Light" : "🌙 Dark"}
-    </button>
-  </div>
-</div>
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className={`shrink-0 rounded-full px-2.5 py-2 text-xs font-semibold shadow transition hover:scale-105 sm:px-4 sm:text-sm ${
+              darkMode
+                ? "border border-violet-700/50 bg-[#181127] text-violet-100"
+                : "border border-violet-300 bg-white/70 text-violet-700"
+            }`}
+          >
+            {darkMode ? "☀️ Light" : "🌙 Dark"}
+          </button>
+        </div>
+      </div>
 
       <section
         className={`relative pt-28 ${
@@ -240,20 +286,27 @@ export default function SafaaPortfolio() {
 
               <motion.div
                 variants={fadeUp}
-                className={`mt-8 lg:hidden mx-auto w-fit overflow-hidden rounded-[2rem] p-3 shadow-xl backdrop-blur-2xl ${
-                  darkMode
-                    ? "border border-violet-800/40 bg-[#181127]"
-                    : "border border-violet-100 bg-white/70"
-                }`}
+                className="mt-8 lg:hidden mx-auto w-fit overflow-hidden rounded-[2rem] p-3 shadow-xl backdrop-blur-2xl"
               >
-                <Image
-                  src="/MyPhoto.png"
-                  alt="Safaa Ayez"
-                  width={300}
-                  height={380}
-                  className="mx-auto h-auto w-[260px] rounded-[1.5rem] object-cover sm:w-[300px]"
-                  priority
-                />
+                <div className="relative mx-auto w-fit">
+                  <div className="absolute -inset-2 rounded-[2rem] bg-gradient-to-r from-violet-500 via-fuchsia-400 to-purple-500 blur-xl opacity-60 animate-pulse" />
+                  <div
+                    className={`relative overflow-hidden rounded-[2rem] p-3 ${
+                      darkMode
+                        ? "border border-violet-800/40 bg-[#181127]"
+                        : "border border-violet-100 bg-white/70"
+                    }`}
+                  >
+                    <Image
+                      src="/MyPhoto.png"
+                      alt="Safaa Ayez"
+                      width={300}
+                      height={380}
+                      className="mx-auto h-auto w-[260px] rounded-[1.5rem] object-cover sm:w-[300px]"
+                      priority
+                    />
+                  </div>
+                </div>
               </motion.div>
 
               <motion.div
@@ -405,21 +458,24 @@ export default function SafaaPortfolio() {
                 }`}
               />
 
-              <div
-                className={`relative mx-auto hidden w-fit overflow-hidden rounded-[2rem] p-3 shadow-xl backdrop-blur-2xl lg:block ${
-                  darkMode
-                    ? "border border-violet-800/40 bg-[#181127]"
-                    : "border border-violet-100 bg-white/70"
-                }`}
-              >
-                <Image
-                  src="/MyPhoto.png"
-                  alt="Safaa Ayez"
-                  width={420}
-                  height={500}
-                  className="h-auto w-full rounded-[1.5rem] object-cover"
-                  priority
-                />
+              <div className="relative mx-auto hidden w-fit lg:block">
+                <div className="absolute -inset-2 rounded-[2rem] bg-gradient-to-r from-violet-500 via-fuchsia-400 to-purple-500 blur-xl opacity-60 animate-pulse" />
+                <div
+                  className={`relative overflow-hidden rounded-[2rem] p-3 shadow-xl backdrop-blur-2xl ${
+                    darkMode
+                      ? "border border-violet-800/40 bg-[#181127]"
+                      : "border border-violet-100 bg-white/70"
+                  }`}
+                >
+                  <Image
+                    src="/MyPhoto.png"
+                    alt="Safaa Ayez"
+                    width={420}
+                    height={500}
+                    className="h-auto w-full rounded-[1.5rem] object-cover"
+                    priority
+                  />
+                </div>
               </div>
 
               <motion.div
@@ -879,6 +935,106 @@ export default function SafaaPortfolio() {
       </motion.section>
 
       <motion.section
+        id="gallery"
+        className="scroll-mt-32 mx-auto max-w-6xl px-6 py-16"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <motion.p
+          variants={fadeUp}
+          className={`text-sm uppercase tracking-[0.25em] ${
+            darkMode ? "text-violet-300" : "text-violet-500"
+          }`}
+        >
+          Gallery
+        </motion.p>
+
+        <motion.h2
+          variants={fadeUp}
+          className={`mt-3 text-3xl font-black ${
+            darkMode ? "text-violet-100" : "text-[#4c2f7a]"
+          }`}
+        >
+          Leadership Activities & Community Work
+        </motion.h2>
+
+        <motion.p
+          variants={fadeUp}
+          className={`mt-3 max-w-2xl ${
+            darkMode ? "text-violet-200/80" : "text-[#5f4b80]"
+          }`}
+        >
+          A visual glimpse of my leadership, volunteering, and community
+          activities.
+        </motion.p>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {leadershipGallery.map((item) => (
+            <motion.div
+              key={item.title}
+              variants={fadeUp}
+              whileHover={{ y: -8 }}
+              className={`overflow-hidden rounded-[2rem] shadow-xl transition ${
+                darkMode
+                  ? "border border-violet-800/40 bg-[#181127]"
+                  : "border border-violet-100 bg-white/85"
+              }`}
+            >
+              <div className="relative h-[260px] w-full">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              <div className="p-5">
+                <h3
+                  className={`text-xl font-bold ${
+                    darkMode ? "text-violet-100" : "text-[#4c2f7a]"
+                  }`}
+                >
+                  {item.title}
+                </h3>
+
+                <p
+                  className={`mt-3 text-sm leading-7 ${
+                    darkMode ? "text-violet-200/80" : "text-[#5f4b80]"
+                  }`}
+                >
+                  {item.description}
+                </p>
+
+                {item.quote && (
+                  <p
+                    className={`mt-4 rounded-2xl px-4 py-3 text-sm italic ${
+                      darkMode
+                        ? "bg-[#221735] text-violet-200"
+                        : "bg-violet-50 text-violet-700"
+                    }`}
+                  >
+                    “{item.quote}”
+                  </p>
+                )}
+
+                {item.link && (
+                  <button
+                    onClick={() => setActiveVideo(item.link)}
+                    className="mt-5 inline-block rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-400 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5"
+                  >
+                    Watch Video
+                  </button>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+
+      <motion.section
         id="contact"
         className="scroll-mt-32 mx-auto max-w-6xl px-6 py-16"
         variants={staggerContainer}
@@ -965,6 +1121,52 @@ export default function SafaaPortfolio() {
           </div>
         </motion.div>
       </motion.section>
+
+      <AnimatePresence>
+        {activeVideo && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveVideo(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+              className={`relative w-full max-w-4xl rounded-[2rem] p-4 shadow-2xl ${
+                darkMode
+                  ? "border border-violet-800/40 bg-[#181127]"
+                  : "border border-violet-100 bg-white"
+              }`}
+            >
+              <button
+                onClick={() => setActiveVideo(null)}
+                className={`absolute right-4 top-4 z-10 rounded-full px-3 py-1 text-sm font-semibold ${
+                  darkMode
+                    ? "bg-[#221735] text-violet-100"
+                    : "bg-violet-100 text-violet-700"
+                }`}
+              >
+                ✕
+              </button>
+
+              <div className="relative aspect-video w-full overflow-hidden rounded-[1.5rem]">
+                <iframe
+                  src={getYoutubeEmbedUrl(activeVideo)}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="h-full w-full"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

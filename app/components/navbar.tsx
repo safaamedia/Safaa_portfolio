@@ -12,13 +12,14 @@ const navItems = [
   { label: "Skills", href: "#skills", id: "skills" },
   { label: "Projects", href: "#projects", id: "projects" },
   { label: "Experience", href: "#experience", id: "experience" },
+  { label: "Gallery", href: "#gallery", id: "gallery" },
   { label: "Contact", href: "#contact", id: "contact" },
 ];
 
 export default function Navbar({ darkMode }: NavbarProps) {
   const navRef = useRef<HTMLElement | null>(null);
   const activeElementRef = useRef<HTMLDivElement | null>(null);
-  const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const buttonRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const getOffsetLeft = (element: HTMLElement) => {
@@ -49,53 +50,54 @@ export default function Navbar({ darkMode }: NavbarProps) {
         x,
         duration: 0.25,
         ease: "power2.out",
-        "--active-element-show": "1",
       });
     } else {
-      gsap.set(activeElement, {
-        x,
-        "--active-element-show": "1",
-      });
+      gsap.set(activeElement, { x });
     }
-  };
-
-  const scrollToSection = (id: string, index: number) => {
-    const element = document.getElementById(id);
-    if (!element) return;
-
-    setActiveIndex(index);
-    moveIndicator(index, true);
-
-    if (id === "contact") {
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: "smooth",
-      });
-      return;
-    }
-
-    const navbarOffset = 120;
-    const top =
-      element.getBoundingClientRect().top + window.scrollY - navbarOffset;
-
-    window.scrollTo({
-      top,
-      behavior: "smooth",
-    });
   };
 
   useEffect(() => {
+    const sections = navItems.map((item) => item.id);
+
+    const updateActiveFromScroll = () => {
+      const scrollPosition = window.scrollY + 160;
+
+      for (let i = 0; i < sections.length; i++) {
+        const element = document.getElementById(sections[i]);
+        if (!element) continue;
+
+        const { offsetTop, offsetHeight } = element;
+
+        if (
+          scrollPosition >= offsetTop &&
+          scrollPosition < offsetTop + offsetHeight
+        ) {
+          setActiveIndex(i);
+          moveIndicator(i, true);
+          break;
+        }
+      }
+    };
+
     const handleResize = () => {
       moveIndicator(activeIndex, false);
     };
 
-    document.fonts.ready.then(() => {
+    const readyFonts = async () => {
+      if ("fonts" in document) {
+        await document.fonts.ready;
+      }
       moveIndicator(activeIndex, false);
-    });
+    };
 
+    readyFonts();
+    window.addEventListener("scroll", updateActiveFromScroll);
     window.addEventListener("resize", handleResize);
 
+    updateActiveFromScroll();
+
     return () => {
+      window.removeEventListener("scroll", updateActiveFromScroll);
       window.removeEventListener("resize", handleResize);
     };
   }, [activeIndex]);
@@ -103,52 +105,40 @@ export default function Navbar({ darkMode }: NavbarProps) {
   return (
     <>
       <style jsx>{`
-  .nav {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: fit-content;
-    max-width: 100%;
-    padding: 8px;
-    border-radius: 999px;
-    backdrop-filter: blur(16px);
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-  }
+        .nav {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          width: fit-content;
+          padding: 8px;
+          border-radius: 999px;
+          backdrop-filter: blur(16px);
+        }
 
-  .nav::-webkit-scrollbar {
-    display: none;
-  }
+        .nav-link {
+          position: relative;
+          z-index: 2;
+          padding: 10px 16px;
+          border-radius: 999px;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 600;
+          transition: color 0.2s ease;
+          white-space: nowrap;
+        }
 
-  .nav-link {
-    position: relative;
-    z-index: 2;
-    padding: 10px 16px;
-    border-radius: 999px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    transition: color 0.2s ease;
-    white-space: nowrap;
-    cursor: pointer;
-    flex: 0 0 auto;
-  }
-
-  .active-element {
-    --active-element-show: 0;
-    position: absolute;
-    z-index: 1;
-    top: 8px;
-    left: 0;
-    width: 88px;
-    height: calc(100% - 16px);
-    border-radius: 999px;
-    opacity: var(--active-element-show);
-    pointer-events: none;
-  }
-`}</style>
+        .active-element {
+          position: absolute;
+          z-index: 1;
+          top: 8px;
+          left: 0;
+          width: 88px;
+          height: calc(100% - 16px);
+          border-radius: 999px;
+          pointer-events: none;
+        }
+      `}</style>
 
       <nav
         ref={navRef}
@@ -184,9 +174,9 @@ export default function Navbar({ darkMode }: NavbarProps) {
                   ? "text-violet-200/80 hover:text-white"
                   : "text-[#5f4b80] hover:text-violet-700"
               }`}
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection(item.id, index);
+              onClick={() => {
+                setActiveIndex(index);
+                moveIndicator(index, true);
               }}
             >
               {item.label}
