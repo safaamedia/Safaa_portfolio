@@ -77,7 +77,7 @@ export default function SafaaPortfolio() {
       description:
         "Responsive landing page developed during my internship to present services with a modern UI and clear user journey.",
       stack: ["HTML", "CSS", "JavaScript", "Responsive Design"],
-      github: "https://github.com/safaamedia/Landing_page",
+      github: "https://github.com/AyezMedia/Landing_page",
       emoji: "✨",
     },
     {
@@ -85,7 +85,7 @@ export default function SafaaPortfolio() {
       description:
         "IoT temperature monitoring dashboard project with a React frontend and Flask backend. The application visualizes temperature data and demonstrates IoT-style monitoring concepts.",
       stack: ["React", "Flask", "SQLite"],
-      github: "https://github.com/safaamedia/IoT_Temp_Watch",
+      github: "https://github.com/AyezMedia/IoT_Temp_Watch",
       emoji: "🌙",
     },
     {
@@ -1094,7 +1094,7 @@ export default function SafaaPortfolio() {
                 Email Me
               </button>
               <a
-                href="https://github.com/safaamedia"
+                href="https://github.com/AyezMedia"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`rounded-2xl px-6 py-3 font-semibold shadow-sm transition hover:-translate-y-1 ${
